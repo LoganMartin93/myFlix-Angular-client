@@ -7,6 +7,10 @@ import {
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
+/**
+ * Declares a global `require` function to dynamically load test files.
+ * This is used to load all `.spec.ts` files for testing.
+ */
 declare const require: {
   context(path: string, deep?: boolean, filter?: RegExp): {
     keys(): string[];
@@ -14,12 +18,19 @@ declare const require: {
   };
 };
 
-// First, initialize the Angular testing environment.
+/**
+ * Initializes the Angular testing environment.
+ * This setup is required to run Angular tests in the browser.
+ */
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting()
 );
-// Then we find all the tests.
+
+/**
+ * Dynamically loads all the `.spec.ts` files that are part of the test suite.
+ * This allows Karma to discover and run all the unit tests in the application.
+ */
 const context = require.context('./', true, /\.spec\.ts$/);
-// And load the modules.
+// Loads all the test modules into the testing environment.
 context.keys().map(context);
